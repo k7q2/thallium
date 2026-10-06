@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thallium | Digital Defense & Security Advisory</title>
+    <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-main: #212529;
+            --text-muted: #6c757d;
+            --accent: #0d6efd;
+            --accent-hover: #0b5ed7;
+            --border-color: #dee2e6;
+            --code-bg: #e9ecef;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--text-main);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        .hero {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 5rem 2rem 3rem 2rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 2rem auto;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .section {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+        }
+
+        .threats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .checker-box {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2.5rem;
+            max-width: 700px;
+            margin: 0 auto;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+        }
+
+        .checker-input-group {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .checker-input-group input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .checker-input-group input:focus {
+            border-color: var(--accent);
+        }
+
+        #checker-result {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 6px;
+            display: none;
+            font-size: 0.95rem;
+        }
+
+        .form-container {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2.5rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 1rem;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: var(--accent);
+            background-color: var(--card-bg);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            height: 120px;
+        }
+
+        footer {
+            border-top: 1px solid var(--border-color);
+            background-color: var(--card-bg);
+            padding: 2rem 0;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.25rem; }
+            nav ul { display: none; }
+            .checker-input-group { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <a href="#" class="logo"><span>[ T ]</span> Thallium Defense</a>
+            <nav>
+                <ul>
+                    <li><a href="#threats">Threats</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#checker">Scam Checker</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>Uncompromising Digital Defense.</h1>
+        <p>Protecting individuals and systems from malware, social engineering, and stealthy digital threats.</p>
+        <a href="#contact" class="btn">Report a Threat or Ask for Help</a>
+    </section>
+
+    <section id="threats" class="section">
+        <h2 class="section-title">Common Threats Explained</h2>
+        <p class="section-subtitle">Understanding how modern malware and scams operate is the first step to staying secure.</p>
+        
+        <div class="threats-grid">
+            <div class="card">
+                <h3>Trojans</h3>
+                <p>Disguised as legitimate files, games, or utility tools. Once run, they open silent backdoors or download secondary payloads onto your machine.</p>
+            </div>
+            <div class="card">
+                <h3>Ransomware</h3>
+                <p>Malicious software that encrypts your personal files, photos, and backups, holding them hostage until a ransom demand is met.</p>
+            </div>
+            <div class="card">
+                <h3>Infostealers & Spyware</h3>
+                <p>Silently track your keystrokes, siphon saved passwords from browsers, and steal session tokens from platforms like Discord or Steam.</p>
+            </div>
+            <div class="card">
+                <h3>Phishing & Social Engineering</h3>
+                <p>Fake login pages, fraudulent urgent alerts, and deceptive links designed to manipulate users into handing over credentials voluntarily.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="section">
+        <h2 class="section-title">Advisory & Cleanups</h2>
+        <p class="section-subtitle">Practical protection when you need it most.</p>
+        
+        <div class="threats-grid">
+            <div class="card">
+                <h3>Malware Removal Playbooks</h3>
+                <p>Step-by-step guidance on isolating infected machines, booting into safe mode, running deep scans, and purging persistent threats.</p>
+            </div>
+            <div class="card">
+                <h3>Link & Scam Verification</h3>
+                <p>Not sure if an email, message, or website link is legit? Submit it to our team to analyze red flags before you click.</p>
+            </div>
+            <div class="card">
+                <h3>Digital Hygiene Consulting</h3>
+                <p>Learn how to properly manage passwords with password managers, enable 2FA, and lock down your personal accounts.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="checker" class="section">
+        <h2 class="section-title">Quick Scam Pattern Analyzer</h2>
+        <p class="section-subtitle">Check text or links for common psychological manipulation triggers used by scammers.</p>
+        
+        <div class="checker-box">
+            <div class="form-group" style="margin-bottom: 0;">
+                <label for="sample-input">Paste a suspicious message, link text, or scenario:</label>
+                <div class="checker-input-group">
+                    <input type="text" id="sample-input" placeholder="e.g., 'URGENT: Your account will be deleted, click here to verify!'">
+                    <button class="btn" onclick="analyzeText()">Analyze</button>
+                </div>
+            </div>
+            <div id="checker-result"></div>
+        </div>
+    </section>
+
+    <section id="contact" class="section">
+        <h2 class="section-title">Submit a Threat or Request Help</h2>
+        <p class="section-subtitle">Need advice on a suspicious link, malware cleanup, or general digital security? Drop us a message.</p>
+        
+        <div class="form-container">
+            <form action="https://formspree.io/f/xqpeeapz" method="POST">
+                <div class="form-group">
+                    <label for="name">Your Name / Alias</label>
+                    <input type="text" id="name" name="name" placeholder="Alex Smith" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="alex@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="inquiry">Inquiry Type</label>
+                    <select id="inquiry" name="inquiry_type">
+                        <option value="Suspicious Link / Scam">Suspicious Link / Scam Verification</option>
+                        <option value="Malware Help">Malware Removal / System Help</option>
+                        <option value="General Question">General Security Question</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="message">Details / Threat Description</label>
+                    <textarea id="message" name="message" placeholder="Describe the suspicious link, file, or security concern in detail..." required></textarea>
+                </div>
+                <button type="submit" class="btn" style="width: 100%;">Submit Secure Report</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Thallium Digital Defense. All rights reserved. Uncompromising security advisory.</p>
+    </footer>
+
+    <script>
+        function analyzeText() {
+            const input = document.getElementById('sample-input').value.toLowerCase();
+            const resultBox = document.getElementById('checker-result');
+            
+            if (!input.trim()) {
+                resultBox.style.display = 'block';
+                resultBox.style.backgroundColor = '#f8d7da';
+                resultBox.style.color = '#721c24';
+                resultBox.innerHTML = '<strong>Error:</strong> Please enter a message or link to analyze.';
+                return;
+            }
+
+            let riskScore = 0;
+            let flags = [];
+
+            if (input.includes('urgent') || input.includes('immediately') || input.includes('act now') || input.includes('expires')) {
+                riskScore += 40;
+                flags.push('Artificial Urgency (classic panic tactic)');
+            }
+            if (input.includes('click here') || input.includes('verify') || input.includes('login') || input.includes('update info')) {
+                riskScore += 30;
+                flags.push('Call to Action link prompt (potential credential harvester)');
+            }
+            if (input.includes('free') || input.includes('winner') || input.includes('prize') || input.includes('nitro') || input.includes('giveaway')) {
+                riskScore += 30;
+                flags.push('Too Good To Be True incentive (common lure)');
+            }
+
+            resultBox.style.display = 'block';
+            
+            if (riskScore >= 50) {
+                resultBox.style.backgroundColor = '#f8d7da';
+                resultBox.style.color = '#721c24';
+                resultBox.innerHTML = `<strong>High Risk Detected (${riskScore}%):</strong> This text shows heavy scam characteristics.<br><ul style="margin-top: 0.5rem; padding-left: 1.25rem;">${flags.map(f => `<li>${f}</li>`).join('')}</ul>`;
+            } else if (riskScore > 0) {
+                resultBox.style.backgroundColor = '#fff3cd';
+                resultBox.style.color = '#856404';
+                resultBox.innerHTML = `<strong>Moderate Caution (${riskScore}%):</strong> Some suspicious patterns found. Proceed with care.<br><ul style="margin-top: 0.5rem; padding-left: 1.25rem;">${flags.map(f => `<li>${f}</li>`).join('')}</ul>`;
+            } else {
+                resultBox.style.backgroundColor = '#d1e7dd';
+                resultBox.style.color = '#0f5132';
+                resultBox.innerHTML = '<strong>Low Apparent Risk:</strong> No immediate standard red flags triggered, but always remain vigilant with unknown links.';
+            }
+        }
+    </script>
+</body>
+</html>
